@@ -4,6 +4,7 @@ const cors = require("cors");
 const prisma = require('./prisma/db');
 const cookieParser = require('cookie-parser');
 const verifyJWT = require('./middleware/jwtTokenMiddleware');
+const {refreshJWTToken}=require('./middleware/refreshTokenMiddleware');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,8 @@ app.use('/logout', require('./routes/logout'));
 app.use('/mail-verification', require('./routes/verifyEmail'));
 
 app.use(verifyJWT);
+app.use(refreshJWTToken);
+
 app.get('/', (req, res) => {
     return res.json({ message: "Welcome to the home page !!!"});
 });
